@@ -5,8 +5,11 @@ module.exports = {
     serviceWorker: true,
     themeConfig: {
         repo: 'beanstalkd/beanstalkd',
-        sidebarDepth: 2,
+        docsRepo: 'pmatseykanets/beanstalkd-docs',
+        docsDir: 'docs',
         editLinks: true,
+        editLinkText: 'Help us improve this page!',
+        sidebarDepth: 2,
         nav: [
             {
                 text: 'Guide',
