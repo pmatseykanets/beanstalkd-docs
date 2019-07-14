@@ -39,7 +39,7 @@ loop do
 end
 ```
 
-See [Client Libraries](/guide/libraries.md) for your favorite language.
+See [Client Libraries](/resources/libraries.md) for your favorite language.
 
 ### Thanks
 
