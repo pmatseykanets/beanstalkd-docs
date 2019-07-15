@@ -15,6 +15,6 @@ deploy:
   skip-cleanup: true
   github-token: $GITHUB_ACCESS_TOKEN
   target-branch: gh-pages
-  local-dir: .vuepress/dist
+  local-dir: docs/.vuepress/dist
   on:
     branch: master
