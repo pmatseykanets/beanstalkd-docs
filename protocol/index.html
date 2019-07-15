@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Protocol | beanstalkd</title>
+    <meta name="description" content="Simple and fast general purpose work queue">
+    
+    
+    <link rel="preload" href="/beanstalkd-docs/assets/css/0.styles.a72af879.css" as="style"><link rel="preload" href="/beanstalkd-docs/assets/js/app.58b3e1dc.js" as="script"><link rel="preload" href="/beanstalkd-docs/assets/js/2.cf7e4b08.js" as="script"><link rel="preload" href="/beanstalkd-docs/assets/js/9.929c3125.js" as="script"><link rel="prefetch" href="/beanstalkd-docs/assets/js/10.e40934cc.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/11.8bb4a971.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/12.104f2bd7.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/13.60741dd3.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/3.1a3a23bb.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/4.7bf71852.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/5.6c0aad71.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/6.6c14a0e8.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/7.4e77194d.js"><link rel="prefetch" href="/beanstalkd-docs/assets/js/8.06f6c8ab.js">
+    <link rel="stylesheet" href="/beanstalkd-docs/assets/css/0.styles.a72af879.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/beanstalkd-docs/" class="home-link router-link-active"><!----> <span class="site-name">beanstalkd</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/beanstalkd-docs/guide/" class="nav-link">Guide</a></div><div class="nav-item"><a href="https://github.com/beanstalkd/beanstalkd/releases/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Releases
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/beanstalkd/beanstalkd" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/beanstalkd-docs/guide/" class="nav-link">Guide</a></div><div class="nav-item"><a href="https://github.com/beanstalkd/beanstalkd/releases/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Releases
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/beanstalkd/beanstalkd" target="_blank" rel="noopener noreferrer" class="repo-link">
+    GitHub
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Guide</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/beanstalkd-docs/guide/" class="sidebar-link">Introduction</a></li><li><a href="/beanstalkd-docs/guide/installation.html" class="sidebar-link">Installation</a></li><li><a href="/beanstalkd-docs/guide/configuration.html" class="sidebar-link">Configuration</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading"><span>Resources</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/beanstalkd-docs/resources/libraries.html" class="sidebar-link">Client Libraries</a></li><li><a href="/beanstalkd-docs/resources/tools.html" class="sidebar-link">Tools</a></li><li><a href="/beanstalkd-docs/resources/faq.html" class="sidebar-link">FAQ</a></li></ul></section></li><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>Internals</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/beanstalkd-docs/protocol/" class="active sidebar-link">Protocol</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#job-lifecycle" class="sidebar-link">Job Lifecycle</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#producer-commands" class="sidebar-link">Producer Commands</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#put" class="sidebar-link">put</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#use" class="sidebar-link">use</a></li></ul></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#worker-commands" class="sidebar-link">Worker Commands</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#reserve" class="sidebar-link">reserve</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#delete" class="sidebar-link">delete</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#release" class="sidebar-link">release</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#bury" class="sidebar-link">bury</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#touch" class="sidebar-link">touch</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#watch" class="sidebar-link">watch</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#ignore" class="sidebar-link">ignore</a></li></ul></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#other-commands" class="sidebar-link">Other Commands</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#peek" class="sidebar-link">peek</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#kick" class="sidebar-link">kick</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#kick-job" class="sidebar-link">kick-job</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#stats-job" class="sidebar-link">stats-job</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#stats-tube" class="sidebar-link">stats-tube</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#stats" class="sidebar-link">stats</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#list-tubes" class="sidebar-link">list-tubes</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#list-tube-used" class="sidebar-link">list-tube-used</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#list-tubes-watched" class="sidebar-link">list-tubes-watched</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#quit" class="sidebar-link">quit</a></li><li class="sidebar-sub-header"><a href="/beanstalkd-docs/protocol/#pause-tube" class="sidebar-link">pause-tube</a></li></ul></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="protocol"><a href="#protocol" aria-hidden="true" class="header-anchor">#</a> Protocol</h1> <p>The <strong>beanstalk protocol</strong> runs over TCP using ASCII encoding. Clients connect,
+send commands and data, wait for responses, and close the connection. For each
+connection, the server processes commands serially in the order in which they
+were received and sends responses in the same order. All integers in the
+protocol are formatted in decimal and (unless otherwise indicated)
+nonnegative.</p> <p>Names, in this protocol, are ASCII strings. They may contain</p> <ul><li>letters <code>A-Z</code> and <code>a-z</code></li> <li>numerals <code>0-9</code></li> <li>hyphen <code>-</code></li> <li>plus <code>+</code></li> <li>slash <code>/</code></li> <li>semicolon <code>;</code></li> <li>dot <code>.</code></li> <li>dollar-sign <code>$</code></li> <li>underscore <code>_</code></li> <li>and parentheses <code>(</code> and <code>)</code></li></ul> <p>but they may not begin with a hyphen. They are terminated by white space
+(either a space char or end of line). Each name must be at least one character
+long.</p> <p>The protocol contains two kinds of data: text lines and unstructured chunks of
+data. Text lines are used for client commands and server responses. Chunks are
+used to transfer job bodies and stats information. Each job body is an opaque
+sequence of bytes. The server never inspects or modifies a job body and always
+sends it back in its original form. It is up to the clients to agree on a
+meaningful interpretation of job bodies.</p> <p>The client may issue the <a href="#quit"><code>quit</code></a> command, or simply close the TCP connection
+when it no longer has use for the server. However, beanstalkd performs very
+well with a large number of open connections, so it is usually better for the
+client to keep its connection open and reuse it as much as possible. This also
+avoids the overhead of establishing new TCP connections.</p> <p>If a client violates the protocol (such as by sending a request that is not
+well-formed or a command that does not exist) or if the server has an error,
+the server will reply with one of the following error messages:</p> <ul><li><p><code>OUT_OF_MEMORY\r\n</code> The server cannot allocate enough memory for the job.
+The client should try again later.</p></li> <li><p><code>INTERNAL_ERROR\r\n</code> This indicates a bug in the server. It should never
+happen. If it does happen, please open
+<a href="https://github.com/beanstalkd/beanstalkd/issues" target="_blank" rel="noopener noreferrer">an issue<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>.</p></li> <li><p><code>BAD_FORMAT\r\n</code> The client sent a command line that was not well-formed.
+This can happen if the line does not end with <code>\r\n</code>, if non-numeric
+characters occur where an integer is expected, if the wrong number of
+arguments are present, or if the command line is mal-formed in any other
+way.</p></li> <li><p><code>UNKNOWN_COMMAND\r\n</code> The client sent a command that the server does not
+know.</p></li></ul> <p>These error responses will not be listed in this document for individual
+commands in the following sections, but they are implicitly included in the
+description of all commands. Clients should be prepared to receive an error
+response after any command.</p> <p>As a last resort, if the server has a serious error that prevents it from
+continuing service to the current client, the server will close the
+connection.</p> <h2 id="job-lifecycle"><a href="#job-lifecycle" aria-hidden="true" class="header-anchor">#</a> Job Lifecycle</h2> <p>A job in beanstalk gets created by a client with the <a href="#put"><code>put</code></a> command. During its
+life it can be in one of four states: <code>ready</code>, <code>reserved</code>, <code>delayed</code>, or
+<code>buried</code>. After the put command, a job typically starts out ready. It waits in
+the ready queue until a worker comes along and runs the <a href="#reserve"><code>reserve</code></a> command. If
+this job is next in the queue, it will be reserved for the worker. The worker
+will execute the job; when it is finished the worker will send a <a href="#delete"><code>delete</code></a>
+command to delete the job.</p> <p>Here is a picture of the typical job lifecycle:</p> <div class="language-txt extra-class"><pre class="language-text"><code> put            reserve               delete
+-----&gt; [READY] ---------&gt; [RESERVED] --------&gt; *poof*
+</code></pre></div><p>Here is a picture with more possibilities:</p> <div class="language-txt extra-class"><pre class="language-text"><code> put with delay               release with delay
+----------------&gt; [DELAYED] &lt;------------.
+                      |                   |
+                      | (time passes)     |
+                      |                   |
+ put                  v     reserve       |       delete
+-----------------&gt; [READY] ---------&gt; [RESERVED] --------&gt; *poof*
+                     ^  ^                |  |
+                     |   \  release      |  |
+                     |    `-------------'   |
+                     |                      |
+                     | kick                 |
+                     |                      |
+                     |       bury           |
+                  [BURIED] &lt;---------------'
+                     |
+                     |  delete
+                      `--------&gt; *poof*
+</code></pre></div><p>The system has one or more tubes. Each tube consists of a ready queue and a
+delay queue. Each job spends its entire life in one tube. Consumers can show
+interest in tubes by sending the <a href="#watch"><code>watch</code></a> command; they can show disinterest by
+sending the <a href="#ignore"><code>ignore</code></a> command. This set of interesting tubes is said to be a
+consumer's <code>watch list</code>. When a client reserves a job, it may come from any of
+the tubes in its watch list.</p> <p>When a client connects, its watch list is initially just the tube named
+<code>default</code>. If it submits jobs without having sent a <a href="#use"><code>use</code></a> command, they will
+live in the tube named <code>default</code>.</p> <p>Tubes are created on demand whenever they are referenced. If a tube is empty
+(that is, it contains no <code>ready</code>, <code>delayed</code>, or <code>buried</code> jobs) and no client refers
+to it, it will be deleted.</p> <h2 id="producer-commands"><a href="#producer-commands" aria-hidden="true" class="header-anchor">#</a> Producer Commands</h2> <h3 id="put"><a href="#put" aria-hidden="true" class="header-anchor">#</a> put</h3> <p>The <code>put</code> command is for any process that wants to insert a job into the queue.
+It comprises a command line followed by the job body:</p> <div class="language-txt extra-class"><pre class="language-text"><code>put &lt;pri&gt; &lt;delay&gt; &lt;ttr&gt; &lt;bytes&gt;\r\n
+&lt;data&gt;\r\n
+</code></pre></div><p>It inserts a job into the client's currently used tube (see the <a href="#use"><code>use</code></a> command
+below).</p> <ul><li><p><code>&lt;pri&gt;</code> is an integer &lt; <code>2**32</code>. Jobs with smaller priority values will be
+scheduled before jobs with larger priorities. The most urgent priority is <code>0</code>;
+the least urgent priority is <code>4,294,967,295</code>.</p></li> <li><p><code>&lt;delay&gt;</code> is an integer number of seconds to wait before putting the job in
+the ready queue. The job will be in the <code>delayed</code> state during this time.</p></li> <li><p><code>&lt;ttr&gt;</code> -- time to run -- is an integer number of seconds to allow a worker
+to run this job. This time is counted from the moment a worker reserves
+this job. If the worker does not delete, release, or bury the job within
+<code>ttr</code> seconds, the job will time out and the server will release the job.
+The minimum <code>ttr</code> is <code>1</code>. If the client sends <code>0</code>, the server will silently
+increase the <code>ttr</code> to <code>1</code>.</p></li> <li><p><code>&lt;bytes&gt;</code> is an integer indicating the size of the job body, not including the trailing <code>\r\n</code>.
+This value must be less than <code>max-job-size</code> (default: <code>2**16</code>).</p></li> <li><p><code>&lt;data&gt;</code> is the job body -- a sequence of bytes of length <code>&lt;bytes&gt;</code> from the previous line.</p></li></ul> <p>After sending the command line and body, the client waits for a reply, which
+may be:</p> <ul><li><p><code>INSERTED &lt;id&gt;\r\n</code> to indicate success.</p> <ul><li><code>&lt;id&gt;</code> is the integer id of the new job</li></ul></li> <li><p><code>BURIED &lt;id&gt;\r\n</code> if the server ran out of memory trying to grow the
+priority queue data structure.</p> <ul><li><code>&lt;id&gt;</code> is the integer id of the new job</li></ul></li> <li><p><code>EXPECTED_CRLF\r\n</code> The job body must be followed by a <code>CR-LF</code> pair, that is,
+<code>\r\n</code>. These two bytes are not counted in the job size given by the client
+in the <a href="#put"><code>put</code></a> command line.</p></li> <li><p><code>JOB_TOO_BIG\r\n</code> The client has requested to put a job with a body larger
+than <code>max-job-size</code> bytes.</p></li> <li><p><code>DRAINING\r\n</code> This means that the server has been put into <code>drain mode</code> and
+is no longer accepting new jobs. The client should try another server or
+disconnect and try again later. To put the server in drain mode, send the
+<code>SIGUSR1</code> signal to the process.</p></li></ul> <h3 id="use"><a href="#use" aria-hidden="true" class="header-anchor">#</a> use</h3> <p>The <code>use</code> command is for producers. Subsequent put commands will put jobs into
+the tube specified by this command. If no use command has been issued, jobs
+will be put into the tube named <code>default</code>.</p> <div class="language-txt extra-class"><pre class="language-text"><code>use &lt;tube&gt;\r\n
+</code></pre></div><ul><li><code>&lt;tube&gt;</code> is a name at most 200 bytes. It specifies the tube to use. If the
+tube does not exist, it will be created.</li></ul> <p>The only reply is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>USING &lt;tube&gt;\r\n
+</code></pre></div><ul><li><code>&lt;tube&gt;</code> is the name of the tube now being used.</li></ul> <h2 id="worker-commands"><a href="#worker-commands" aria-hidden="true" class="header-anchor">#</a> Worker Commands</h2> <p>A process that wants to consume jobs from the queue uses <a href="#reserve"><code>reserve</code></a>, <a href="#delete"><code>delete</code></a>,
+<a href="#release"><code>release</code></a>, and <a href="#bury"><code>bury</code></a>.</p> <h3 id="reserve"><a href="#reserve" aria-hidden="true" class="header-anchor">#</a> reserve</h3> <p>The first worker command, <code>reserve</code>, looks like this:</p> <div class="language-txt extra-class"><pre class="language-text"><code>reserve\r\n
+</code></pre></div><p>Alternatively, you can specify a timeout as follows:</p> <div class="language-txt extra-class"><pre class="language-text"><code>reserve-with-timeout &lt;seconds&gt;\r\n
+</code></pre></div><p>This will return a newly reserved job. If no job is available to be reserved,
+beanstalkd will wait to send a response until one becomes available. Once a
+job is reserved for the client, the client has limited time to run (<code>TTR</code>) the
+job before the job times out. When the job times out, the server will put the
+job back into the ready queue. Both the <code>TTR</code> and the actual time left can be
+found in response to the <a href="#stats-job"><code>stats-job</code></a> command.</p> <p>If more than one job is ready, beanstalkd will choose the one with the
+smallest priority value. Within each priority, it will choose the one that
+was received first.</p> <p>A timeout value of <code>0</code> will cause the server to immediately return either a
+response or <code>TIMED_OUT</code>.  A positive value of timeout will limit the amount of
+time the client will block on the reserve request until a job becomes
+available.</p> <p>During the <code>TTR</code> of a reserved job, the last second is kept by the server as a
+safety margin, during which the client will not be made to wait for another
+job. If the client issues a reserve command during the safety margin, or if
+the safety margin arrives while the client is waiting on a reserve command,
+the server will respond with:</p> <div class="language-txt extra-class"><pre class="language-text"><code>DEADLINE_SOON\r\n
+</code></pre></div><p>This gives the client a chance to delete or release its reserved job before
+the server automatically releases it.</p> <div class="language-txt extra-class"><pre class="language-text"><code>TIMED_OUT\r\n
+</code></pre></div><p>If a non-negative timeout was specified and the timeout exceeded before a job
+became available, or if the client's connection is half-closed, the server
+will respond with <code>TIMED_OUT</code>.</p> <p>Otherwise, the only other response to this command is a successful reservation
+in the form of a text line followed by the job body:</p> <div class="language-txt extra-class"><pre class="language-text"><code>RESERVED &lt;id&gt; &lt;bytes&gt;\r\n
+&lt;data&gt;\r\n
+</code></pre></div><ul><li><p><code>&lt;id&gt;</code> is the job id -- an integer unique to this job in this instance of
+beanstalkd.</p></li> <li><p><code>&lt;bytes&gt;</code> is an integer indicating the size of the job body, not including
+the trailing <code>\r\n</code>.</p></li> <li><p><code>&lt;data&gt;</code> is the job body -- a sequence of bytes of length <code>&lt;bytes&gt;</code> from the
+previous line. This is a verbatim copy of the bytes that were originally
+sent to the server in the <a href="#put"><code>put</code></a> command for this job.</p></li></ul> <h3 id="delete"><a href="#delete" aria-hidden="true" class="header-anchor">#</a> delete</h3> <p>The <code>delete</code> command removes a job from the server entirely. It is normally used
+by the client when the job has successfully run to completion. A client can
+delete jobs that it has reserved, ready jobs, delayed jobs, and jobs that are
+<code>buried</code>. The <code>delete</code> command looks like this:</p> <div class="language-txt extra-class"><pre class="language-text"><code>delete &lt;id&gt;\r\n
+</code></pre></div><ul><li><code>&lt;id&gt;</code> is the job id to delete.</li></ul> <p>The client then waits for one line of response, which may be:</p> <ul><li><p><code>DELETED\r\n</code> to indicate success.</p></li> <li><p><code>NOT_FOUND\r\n</code> if the job does not exist or is not either reserved by the
+client, ready, or buried. This could happen if the job timed out before the
+client sent the delete command.</p></li></ul> <h3 id="release"><a href="#release" aria-hidden="true" class="header-anchor">#</a> release</h3> <p>The <code>release</code> command puts a reserved job back into the ready queue (and marks
+its state as <code>ready</code>) to be run by any client. It is normally used when the job
+fails because of a transitory error. It looks like this:</p> <div class="language-txt extra-class"><pre class="language-text"><code>release &lt;id&gt; &lt;pri&gt; &lt;delay&gt;\r\n
+</code></pre></div><ul><li><p><code>&lt;id&gt;</code> is the job id to release.</p></li> <li><p><code>&lt;pri&gt;</code> is a new priority to assign to the job.</p></li> <li><p><code>&lt;delay&gt;</code> is an integer number of seconds to wait before putting the job in
+the ready queue. The job will be in the <code>delayed</code> state during this time.</p></li></ul> <p>The client expects one line of response, which may be:</p> <ul><li><p><code>RELEASED\r\n</code> to indicate success.</p></li> <li><p><code>BURIED\r\n</code> if the server ran out of memory trying to grow the priority
+queue data structure.</p></li> <li><p><code>NOT_FOUND\r\n</code> if the job does not exist or is not reserved by the client.</p></li></ul> <h3 id="bury"><a href="#bury" aria-hidden="true" class="header-anchor">#</a> bury</h3> <p>The <code>bury</code> command puts a job into the <code>buried</code> state. Buried jobs are put into a
+FIFO linked list and will not be touched by the server again until a client
+kicks them with the <a href="#kick"><code>kick</code></a> command.</p> <p>The <code>bury</code> command looks like this:</p> <div class="language-txt extra-class"><pre class="language-text"><code>bury &lt;id&gt; &lt;pri&gt;\r\n
+</code></pre></div><ul><li><p><code>&lt;id&gt;</code> is the job id to release.</p></li> <li><p><code>&lt;pri&gt;</code> is a new priority to assign to the job.</p></li></ul> <p>There are two possible responses:</p> <ul><li><p><code>BURIED\r\n</code> to indicate success.</p></li> <li><p><code>NOT_FOUND\r\n</code> if the job does not exist or is not reserved by the client.</p></li></ul> <h3 id="touch"><a href="#touch" aria-hidden="true" class="header-anchor">#</a> touch</h3> <p>The <code>touch</code> command allows a worker to request more time to work on a job.
+This is useful for jobs that potentially take a long time, but you still want
+the benefits of a <code>TTR</code> pulling a job away from an unresponsive worker.  A worker
+may periodically tell the server that it's still alive and processing a job
+(e.g. it may do this on <code>DEADLINE_SOON</code>). The command postpones the auto
+release of a reserved job until <code>TTR</code> seconds from when the command is issued.</p> <p>The touch command looks like this:</p> <div class="language-txt extra-class"><pre class="language-text"><code>touch &lt;id&gt;\r\n
+</code></pre></div><ul><li><code>&lt;id&gt;</code> is the ID of a job reserved by the current connection.</li></ul> <p>There are two possible responses:</p> <ul><li><p><code>TOUCHED\r\n</code> to indicate success.</p></li> <li><p><code>NOT_FOUND\r\n</code> if the job does not exist or is not reserved by the client.</p></li></ul> <h3 id="watch"><a href="#watch" aria-hidden="true" class="header-anchor">#</a> watch</h3> <p>The <code>watch</code> command adds the named tube to the watch list for the current
+connection. A reserve command will take a job from any of the tubes in the
+watch list. For each new connection, the watch list initially consists of one
+tube, named <code>default</code>.</p> <div class="language-txt extra-class"><pre class="language-text"><code>watch &lt;tube&gt;\r\n
+</code></pre></div><ul><li><code>&lt;tube&gt;</code> is a name at most 200 bytes. It specifies a tube to add to the watch
+list. If the tube doesn't exist, it will be created.</li></ul> <p>The reply is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>WATCHING &lt;count&gt;\r\n
+</code></pre></div><ul><li><code>&lt;count&gt;</code> is the integer number of tubes currently in the watch list.</li></ul> <h3 id="ignore"><a href="#ignore" aria-hidden="true" class="header-anchor">#</a> ignore</h3> <p>The <code>ignore</code> command is for consumers. It removes the named tube from the
+<code>watch list</code> for the current connection.</p> <div class="language-txt extra-class"><pre class="language-text"><code>ignore &lt;tube&gt;\r\n
+</code></pre></div><p>The reply is one of:</p> <ul><li><p><code>WATCHING &lt;count&gt;\r\n</code> to indicate success.</p> <ul><li><code>&lt;count&gt;</code> is the integer number of tubes currently in the <code>watch list</code>.</li></ul></li> <li><p><code>NOT_IGNORED\r\n</code> if the client attempts to ignore the only tube in its
+<code>watch list</code>.</p></li></ul> <h2 id="other-commands"><a href="#other-commands" aria-hidden="true" class="header-anchor">#</a> Other Commands</h2> <h3 id="peek"><a href="#peek" aria-hidden="true" class="header-anchor">#</a> peek</h3> <p>The <code>peek</code> commands let the client inspect a job in the system. There are four
+variations. All but the first operate only on the currently used tube.</p> <ul><li><p><code>peek &lt;id&gt;\r\n</code> - return job <code>&lt;id&gt;</code>.</p></li> <li><p><code>peek-ready\r\n</code> - return the next ready job.</p></li> <li><p><code>peek-delayed\r\n</code> - return the delayed job with the shortest delay left.</p></li> <li><p><code>peek-buried\r\n</code> - return the next job in the list of buried jobs.</p></li></ul> <p>There are two possible responses, either a single line:</p> <ul><li><code>NOT_FOUND\r\n</code> if the requested job doesn't exist or there are no jobs in
+the requested state.</li></ul> <p>Or a line followed by a chunk of data, if the command was successful:</p> <div class="language-txt extra-class"><pre class="language-text"><code>FOUND &lt;id&gt; &lt;bytes&gt;\r\n
+&lt;data&gt;\r\n
+</code></pre></div><ul><li><p><code>&lt;id&gt;</code> is the job id.</p></li> <li><p><code>&lt;bytes&gt;</code> is an integer indicating the size of the job body, not including
+the trailing <code>\r\n</code>.</p></li> <li><p><code>&lt;data&gt;</code> is the job body -- a sequence of bytes of length <code>&lt;bytes&gt;</code> from the
+previous line.</p></li></ul> <h3 id="kick"><a href="#kick" aria-hidden="true" class="header-anchor">#</a> kick</h3> <p>The <code>kick</code> command applies only to the currently used tube. It moves jobs into
+the <code>ready</code> queue. If there are any buried jobs, it will only kick <code>buried</code> jobs.
+Otherwise it will kick <code>delayed</code> jobs. It looks like:</p> <div class="language-txt extra-class"><pre class="language-text"><code>kick &lt;bound&gt;\r\n
+</code></pre></div><ul><li><code>&lt;bound&gt;</code> is an integer upper bound on the number of jobs to kick. The server
+will kick no more than <code>&lt;bound&gt;</code> jobs.</li></ul> <p>The response is of the form:</p> <div class="language-txt extra-class"><pre class="language-text"><code>KICKED &lt;count&gt;\r\n
+</code></pre></div><ul><li><code>&lt;count&gt;</code> is an integer indicating the number of jobs actually kicked.</li></ul> <h3 id="kick-job"><a href="#kick-job" aria-hidden="true" class="header-anchor">#</a> kick-job</h3> <p>The <code>kick-job</code> command is a variant of <code>kick</code> that operates with a single job
+identified by its job id. If the given job id exists and is in a <code>buried</code> or
+<code>delayed</code> state, it will be moved to the ready queue of the the same tube where it
+currently belongs. The syntax is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>kick-job &lt;id&gt;\r\n
+</code></pre></div><ul><li><code>&lt;id&gt;</code> is the job id to kick.</li></ul> <p>The response is one of:</p> <ul><li><p><code>NOT_FOUND\r\n</code> if the job does not exist or is not in a kickable state. This
+can also happen upon internal errors.</p></li> <li><p><code>KICKED\r\n</code> when the operation succeeded.</p></li></ul> <h3 id="stats-job"><a href="#stats-job" aria-hidden="true" class="header-anchor">#</a> stats-job</h3> <p>The <code>stats-job</code> command gives statistical information about the specified job if
+it exists. Its form is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>stats-job &lt;id&gt;\r\n
+</code></pre></div><ul><li><code>&lt;id&gt;</code> is a job id.</li></ul> <p>The response is one of:</p> <ul><li><p><code>NOT_FOUND\r\n</code> if the job does not exist.</p></li> <li><p><code>OK &lt;bytes&gt;\r\n&lt;data&gt;\r\n</code></p> <ul><li><p><code>&lt;bytes&gt;</code> is the size of the following data section in bytes.</p></li> <li><p><code>&lt;data&gt;</code> is a sequence of bytes of length <code>&lt;bytes&gt;</code> from the previous line. It
+is a YAML file with statistical information represented a dictionary.</p></li></ul></li></ul> <p>The <code>stats-job</code> data is a YAML file representing a single dictionary of strings
+to scalars. It contains these keys:</p> <ul><li><p><code>id</code> is the job id</p></li> <li><p><code>tube</code> is the name of the tube that contains this job</p></li> <li><p><code>state</code> is <code>ready</code> or <code>delayed</code> or <code>reserved</code> or <code>buried</code></p></li> <li><p><code>pri</code> is the priority value set by the <a href="#put"><code>put</code></a>, <a href="#release"><code>release</code></a>, or <a href="#bury"><code>bury</code></a> commands.</p></li> <li><p><code>age</code> is the time in seconds since the <a href="#put"><code>put</code></a> command that created this job.</p></li> <li><p><code>delay</code> is the integer number of seconds to wait before putting this job in
+the <code>ready</code> queue.</p></li> <li><p><code>ttr</code> -- time to run -- is the integer number of seconds a worker is
+allowed to run this job.</p></li> <li><p><code>time-left</code> is the number of seconds left until the server puts this job
+into the <code>ready</code> queue. This number is only meaningful if the job is
+reserved or delayed. If the job is reserved and this amount of time
+elapses before its state changes, it is considered to have timed out.</p></li> <li><p><code>file</code> is the number of the earliest binlog file containing this job.
+If <code>-b</code> wasn't used, this will be <code>0</code>.</p></li> <li><p><code>reserves</code> is the number of times this job has been reserved.</p></li> <li><p><code>timeouts</code> is the number of times this job has timed out during a
+reservation.</p></li> <li><p><code>releases</code> is the number of times a client has released this job from a
+reservation.</p></li> <li><p><code>buries</code> is the number of times this job has been buried.</p></li> <li><p><code>kicks</code> is the number of times this job has been kicked.</p></li></ul> <h3 id="stats-tube"><a href="#stats-tube" aria-hidden="true" class="header-anchor">#</a> stats-tube</h3> <p>The <code>stats-tube</code> command gives statistical information about the specified tube
+if it exists. Its form is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>stats-tube &lt;tube&gt;\r\n
+</code></pre></div><ul><li><code>&lt;tube&gt;</code> is a name at most 200 bytes. Stats will be returned for this tube.</li></ul> <p>The response is one of:</p> <ul><li><p><code>NOT_FOUND\r\n</code> if the tube does not exist.</p></li> <li><p><code>OK &lt;bytes&gt;\r\n&lt;data&gt;\r\n</code></p> <ul><li><p><code>&lt;bytes&gt;</code> is the size of the following data section in bytes.</p></li> <li><p><code>&lt;data&gt;</code> is a sequence of bytes of length <code>&lt;bytes&gt;</code> from the previous line. It
+is a YAML file with statistical information represented a dictionary.</p></li></ul></li></ul> <p>The <code>stats-tube</code> data is a YAML file representing a single dictionary of strings
+to scalars. It contains these keys:</p> <ul><li><p><code>name</code> is the tube's name.</p></li> <li><p><code>current-jobs-urgent</code> is the number of ready jobs with priority &lt; <code>1024</code> in
+this tube.</p></li> <li><p><code>current-jobs-ready</code> is the number of jobs in the ready queue in this tube.</p></li> <li><p><code>current-jobs-reserved</code> is the number of jobs reserved by all clients in
+this tube.</p></li> <li><p><code>current-jobs-delayed</code> is the number of delayed jobs in this tube.</p></li> <li><p><code>current-jobs-buried</code> is the number of buried jobs in this tube.</p></li> <li><p><code>total-jobs</code> is the cumulative count of jobs created in this tube in
+the current beanstalkd process.</p></li> <li><p><code>current-using</code> is the number of open connections that are currently
+using this tube.</p></li> <li><p><code>current-waiting</code> is the number of open connections that have issued a
+reserve command while watching this tube but not yet received a response.</p></li> <li><p><code>current-watching</code> is the number of open connections that are currently
+watching this tube.</p></li> <li><p><code>pause</code> is the number of seconds the tube has been paused for.</p></li> <li><p><code>cmd-delete</code> is the cumulative number of <a href="#delete"><code>delete</code></a> commands for this tube</p></li> <li><p><code>cmd-pause-tube</code> is the cumulative number of <a href="#pause-tube"><code>pause-tube</code></a> commands for this
+tube.</p></li> <li><p><code>pause-time-left</code> is the number of seconds until the tube is un-paused.</p></li></ul> <h3 id="stats"><a href="#stats" aria-hidden="true" class="header-anchor">#</a> stats</h3> <p>The <code>stats</code> command gives statistical information about the system as a whole.
+Its form is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>stats\r\n
+</code></pre></div><p>The server will respond:</p> <div class="language-txt extra-class"><pre class="language-text"><code>OK &lt;bytes&gt;\r\n
+&lt;data&gt;\r\n
+</code></pre></div><ul><li><p><code>&lt;bytes&gt;</code> is the size of the following data section in bytes.</p></li> <li><p><code>&lt;data&gt;</code> is a sequence of bytes of length <code>&lt;bytes&gt;</code> from the previous line. It
+is a YAML file with statistical information represented a dictionary.</p></li></ul> <p>The <code>stats</code> data for the system is a YAML file representing a single dictionary
+of strings to scalars. Entries described as <code>cumulative</code> are reset when the
+beanstalkd process starts; they are not stored on disk with the <code>-b</code> flag.</p> <ul><li><p><code>current-jobs-urgent</code> is the number of ready jobs with priority &lt; <code>1024</code>.</p></li> <li><p><code>current-jobs-ready</code> is the number of jobs in the <code>ready</code> queue.</p></li> <li><p><code>current-jobs-reserved</code> is the number of jobs reserved by all clients.</p></li> <li><p><code>current-jobs-delayed</code> is the number of <code>delayed</code> jobs.</p></li> <li><p><code>current-jobs-buried</code> is the number of <code>buried</code> jobs.</p></li> <li><p><code>cmd-put</code> is the cumulative number of <a href="#put"><code>put</code></a> commands.</p></li> <li><p><code>cmd-peek</code> is the cumulative number of <a href="#peek"><code>peek</code></a> commands.</p></li> <li><p><code>cmd-peek-ready</code> is the cumulative number of <a href="#peek"><code>peek-ready</code></a> commands.</p></li> <li><p><code>cmd-peek-delayed</code> is the cumulative number of <a href="#peek"><code>peek-delayed</code></a> commands.</p></li> <li><p><code>cmd-peek-buried</code> is the cumulative number of <a href="#peek"><code>peek-buried</code></a> commands.</p></li> <li><p><code>cmd-reserve</code> is the cumulative number of <a href="#reserve"><code>reserve</code></a> commands.</p></li> <li><p><code>cmd-use</code> is the cumulative number of <a href="#use"><code>use</code></a> commands.</p></li> <li><p><code>cmd-watch</code> is the cumulative number of <a href="#watch"><code>watch</code></a> commands.</p></li> <li><p><code>cmd-ignore</code> is the cumulative number of <a href="#ignore"><code>ignore</code></a> commands.</p></li> <li><p><code>cmd-delete</code> is the cumulative number of <a href="#delete"><code>delete</code></a> commands.</p></li> <li><p><code>cmd-release</code> is the cumulative number of <a href="#release"><code>release</code></a> commands.</p></li> <li><p><code>cmd-bury</code> is the cumulative number of <a href="#bury"><code>bury</code></a> commands.</p></li> <li><p><code>cmd-kick</code> is the cumulative number of <a href="#kick"><code>kick</code></a> commands.</p></li> <li><p><code>cmd-stats</code> is the cumulative number of <a href="#stats"><code>stats</code></a> commands.</p></li> <li><p><code>cmd-stats-job</code> is the cumulative number of <a href="#stats-job"><code>stats-job</code></a> commands.</p></li> <li><p><code>cmd-stats-tube</code> is the cumulative number of <a href="#stats-tube"><code>stats-tube</code></a> commands.</p></li> <li><p><code>cmd-list-tubes</code> is the cumulative number of <a href="#list-tubes"><code>list-tubes</code></a> commands.</p></li> <li><p><code>cmd-list-tube-used</code> is the cumulative number of <a href="#list-tube-used"><code>list-tube-used</code></a> commands.</p></li> <li><p><code>cmd-list-tubes-watched</code> is the cumulative number of <a href="#list-tubes-watched"><code>list-tubes-watched</code></a> commands.</p></li> <li><p><code>cmd-pause-tube</code> is the cumulative number of <a href="#pause-tube"><code>pause-tube</code></a> commands.</p></li> <li><p><code>job-timeouts</code> is the cumulative count of times a job has timed out.</p></li> <li><p><code>total-jobs</code> is the cumulative count of jobs created.</p></li> <li><p><code>max-job-size</code> is the maximum number of bytes in a job.</p></li> <li><p><code>current-tubes</code> is the number of currently existing tubes.</p></li> <li><p><code>current-connections</code> is the number of currently open connections.</p></li> <li><p><code>current-producers</code> is the number of open connections that have each
+issued at least one put command.</p></li> <li><p><code>current-workers</code> is the number of open connections that have each issued
+at least one <a href="#reserve"><code>reserve</code></a> command.</p></li> <li><p><code>current-waiting</code> is the number of open connections that have issued a
+<a href="#reserve"><code>reserve</code></a> command but not yet received a response.</p></li> <li><p><code>total-connections</code> is the cumulative count of connections.</p></li> <li><p><code>pid</code> is the process id of the server.</p></li> <li><p><code>version</code> is the version string of the server.</p></li> <li><p><code>rusage-utime</code> is the cumulative user CPU time of this process in seconds
+and microseconds.</p></li> <li><p><code>rusage-stime</code> is the cumulative system CPU time of this process in
+seconds and microseconds.</p></li> <li><p><code>uptime</code> is the number of seconds since this server process started running.</p></li> <li><p><code>binlog-oldest-index</code> is the index of the oldest binlog file needed to
+store the current jobs.</p></li> <li><p><code>binlog-current-index</code> is the index of the current binlog file being
+written to. If binlog is not active this value will be <code>0</code>.</p></li> <li><p><code>binlog-max-size</code> is the maximum size in bytes a binlog file is allowed
+to get before a new binlog file is opened.</p></li> <li><p><code>binlog-records-written</code> is the cumulative number of records written
+to the binlog.</p></li> <li><p><code>binlog-records-migrated</code> is the cumulative number of records written
+as part of compaction.</p></li> <li><p><code>id</code> is a random id string for this server process, generated when each
+beanstalkd process starts.</p></li> <li><p><code>hostname</code> the hostname of the machine as determined by uname.</p></li></ul> <h3 id="list-tubes"><a href="#list-tubes" aria-hidden="true" class="header-anchor">#</a> list-tubes</h3> <p>The <code>list-tubes</code> command returns a list of all existing tubes. Its form is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>list-tubes\r\n
+</code></pre></div><p>The response is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>OK &lt;bytes&gt;\r\n
+&lt;data&gt;\r\n
+</code></pre></div><ul><li><p><code>&lt;bytes&gt;</code> is the size of the following data section in bytes.</p></li> <li><p><code>&lt;data&gt;</code> is a sequence of bytes of length <code>&lt;bytes&gt;</code> from the previous line. It
+is a YAML file containing all tube names as a list of strings.</p></li></ul> <h3 id="list-tube-used"><a href="#list-tube-used" aria-hidden="true" class="header-anchor">#</a> list-tube-used</h3> <p>The <code>list-tube-used</code> command returns the tube currently being used by the
+client. Its form is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>list-tube-used\r\n
+</code></pre></div><p>The response is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>USING &lt;tube&gt;\r\n
+</code></pre></div><ul><li><code>&lt;tube&gt;</code> is the name of the tube being used.</li></ul> <h3 id="list-tubes-watched"><a href="#list-tubes-watched" aria-hidden="true" class="header-anchor">#</a> list-tubes-watched</h3> <p>The <code>list-tubes-watched</code> command returns a list tubes currently being watched by
+the client. Its form is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>list-tubes-watched\r\n
+</code></pre></div><p>The response is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>OK &lt;bytes&gt;\r\n
+&lt;data&gt;\r\n
+</code></pre></div><ul><li><p><code>&lt;bytes&gt;</code> is the size of the following data section in bytes.</p></li> <li><p><code>&lt;data&gt;</code> is a sequence of bytes of length <code>&lt;bytes&gt;</code> from the previous line. It
+is a YAML file containing watched tube names as a list of strings.</p></li></ul> <h3 id="quit"><a href="#quit" aria-hidden="true" class="header-anchor">#</a> quit</h3> <p>The <code>quit</code> command simply closes the connection. Its form is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>quit\r\n
+</code></pre></div><h3 id="pause-tube"><a href="#pause-tube" aria-hidden="true" class="header-anchor">#</a> pause-tube</h3> <p>The <code>pause-tube</code> command can delay any new job being reserved for a given time. Its form is:</p> <div class="language-txt extra-class"><pre class="language-text"><code>pause-tube &lt;tube-name&gt; &lt;delay&gt;\r\n
+</code></pre></div><ul><li><p><code>&lt;tube&gt;</code> is the tube to pause</p></li> <li><p><code>&lt;delay&gt;</code> is an integer number of seconds &lt; <code>2**32</code> to wait before reserving any more
+jobs from the queue</p></li></ul> <p>There are two possible responses:</p> <ul><li><p><code>PAUSED\r\n</code> to indicate success.</p></li> <li><p><code>NOT_FOUND\r\n</code> if the tube does not exist.</p></li></ul></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/pmatseykanets/beanstalkd-docs/edit/master/docs/protocol/README.md" target="_blank" rel="noopener noreferrer">Help us improve this page!</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/beanstalkd-docs/resources/faq.html" class="prev">
+          FAQ
+        </a></span> <!----></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/beanstalkd-docs/assets/js/app.58b3e1dc.js" defer></script><script src="/beanstalkd-docs/assets/js/2.cf7e4b08.js" defer></script><script src="/beanstalkd-docs/assets/js/9.929c3125.js" defer></script>
+  </body>
+</html>
