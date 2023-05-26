@@ -17,6 +17,7 @@
 
 ## GUI
 
+- [BeanstalkGUI](https://beanstalkgui.com/) A modern, native, and feature-rich Windows & Linux based GUI app for beanstalkd work queue.
 - [beanstalk_console](https://github.com/ptrofimov/beanstalk_console) PHP Admin for Beanstalk queue server
 - [django-Jack](https://github.com/andreisavu/django-jack) beanstalkd web administration interface
 - [phpBeanstalkdAdmin](http://mnapoli.github.com/phpBeanstalkdAdmin/) monitoring and administration interface
